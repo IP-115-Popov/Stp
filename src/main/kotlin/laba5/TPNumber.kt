@@ -4,9 +4,11 @@ class TPNumber {
     private var number: String
     var system: Int
     var accuracy: Int
+    fun getNumberNotPoint() = number
     fun getNumber() : String {
-        val length = number.length
-        if (accuracy > length || accuracy <= 0) {
+        val length = this.length()
+        if (accuracy <= 0) return number // Некорректная позиция, возвращаем исходную строку
+        if (accuracy > length ) {
             return number // Некорректная позиция, возвращаем исходную строку
         }
         return number.substring(0, length - accuracy) + "." + number.substring(length - accuracy)
@@ -30,13 +32,26 @@ class TPNumber {
     }
 
     operator fun plus(other: TPNumber): TPNumber {
+        var result = ""
+
+        if ((number.first() == '-') && (other.number.first() == '-')) {
+            result = "-"
+            number = number.drop(1)
+            other.number = other.number.drop(1)
+        } else if (number.first() == '-') {
+            number = number.drop(1)
+            return other - this
+        } else if (other.number.first() == '-') {
+            other.number = other.number.drop(1)
+            return this - other
+        }
 
         val maxLength = maxOf(number.length, other.number.length)
         val num1 = number.padStart(maxLength, '0')
         val num2 = other.number.padStart(maxLength, '0')
 
         var carry = 0
-        var result = ""
+
         for (i in maxLength - 1 downTo 0) {
             val digit1 = charToDigit(num1[i])
             val digit2 = charToDigit(num2[i])
@@ -52,13 +67,32 @@ class TPNumber {
     }
 
     operator fun minus(other: TPNumber) : TPNumber {
+        var result = ""
+        //-
+        if ((number.first() == '-') && (other.number.first() == '-')) {
+            number = number.drop(1)
+            other.number = other.number.drop(1)
+            return other - this
+        } else if (number.first() == '-') {
+            number = number.drop(1)
+            var resNum = "-" + (other + this).getNumber()
+            return TPNumber(resNum, system, accuracy)
+        } else if (other.number.first() == '-') {
+            other.number = other.number.drop(1)
+            return this + other
+        }
+        //a<b + "-" оба числа обязательно без -
+        if (this.number < other.number) {
+            val rezNum = "-" + (other - this).getNumber()
+            return TPNumber(rezNum, system, accuracy)
+        }
+
 
         val maxLength = maxOf(number.length, other.number.length)
         val num1 = number.padStart(maxLength, '0')
         val num2 = other.number.padStart(maxLength, '0')
 
         var carry = 0
-        var result = ""
         for (i in maxLength - 1 downTo 0) {
             var digit1 = charToDigit(num1[i]) - carry
             carry = 0
@@ -77,12 +111,25 @@ class TPNumber {
         return TPNumber(result, system).setAccuracy(accuracy)
     }
     operator fun times(other: TPNumber) : TPNumber {
-        //val maxLength = maxOf(number.length, other.number.length)
+        var result = ""
+
+        if ((number.first() == '-') && (other.number.first() == '-')) {
+            number = number.drop(1)
+            other.number = other.number.drop(1)
+        } else if (number.first() == '-') {
+            result = "-"
+            number = number.drop(1)
+            return other - this
+        } else if (other.number.first() == '-') {
+            result = "-"
+            other.number = other.number.drop(1)
+            return this - other
+        }
+
         val num1 = number//.padStart(maxLength, '0')
         val num2 = other.number//.padStart(maxLength, '0')
 
         var carry = 0
-        var result = ""
         val resArr = arrayOfNulls<TPNumber?>(num2.length)
         for (i in num2.length - 1 downTo 0) {
             for (j in num1.length - 1 downTo 0) {
@@ -108,10 +155,51 @@ class TPNumber {
 
         return rez2!!.setAccuracy(accuracy*2)
     }
-    //operator fun div(other: TPNumber) : TPNumber {
-    //    TODO()
-    //}
+    operator fun div(other: TPNumber): TPNumber {
+        var num1 = this
+        var num2 = other
 
+        var remainder = 0
+        val one = TPNumber("1",system, accuracy)
+
+        var res = TPNumber("1",system, accuracy)
+
+        var f = ""
+        if (num2 <= num1)
+        {
+            res = TPNumber("1",system, accuracy)
+        }
+        else {
+            f = "0"
+            res = TPNumber("0",system, accuracy)
+        }
+        var resAccuracy = 0
+
+
+        while (true) {
+            if (num2 <= num1) {
+                num2 += num2
+                res += one
+            } else if (resAccuracy < accuracy) {
+                resAccuracy += 1
+                num1.number += "0"
+                res = one
+            } else {
+                val n =  res.getNumberNotPoint()+f
+                //return res.setAccuracy(accuracy*2)
+                return TPNumber(n, system).setAccuracy(resAccuracy*2)
+            }
+        }
+    }
+
+    operator fun compareTo(other: TPNumber): Int {
+        var rezNum = this - other
+        if (rezNum.number.first() == '-') return -1
+        else if (rezNum.number.all { char -> char == '0' || char == '.' || char == '-'})
+            return 0
+        else
+            return 1
+    }
 
     private fun charToDigit(char: Char): Int =
         when (char) {
@@ -136,4 +224,12 @@ class TPNumber {
             15 -> 'F'
             else -> throw Exception("не подходяшее число")
         }
+
+    private fun length() : Int
+    {
+        if (number.first() == '-')
+            return number.length -1
+        else
+            return number.length
+    }
 }

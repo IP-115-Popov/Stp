@@ -118,4 +118,45 @@ class TPNumberTest {
             assertEquals(expected, actual)
         }
     }
+
+    @Nested
+    inner class DivTests {
+        @Test
+        fun `Div integers`() {
+            // arrange
+            val num1 = TPNumber("1000", 2, 0)
+            val num2 = TPNumber("10", 2, 0)
+            val expected = TPNumber("100", 2, 0).getNumber()
+            // act
+            val a = num1 / num2
+            val actual = a.getNumber()
+            // assert
+            assertEquals(expected, actual)
+
+        }
+        @Test
+        fun `Div float`() {
+            // arrange
+            val num1 = TPNumber("10", 2, 3)
+            val num2 = TPNumber("100", 2, 3)
+            val expected = TPNumber(".100000", 2, 6).getNumber()
+            // act
+            val a = num1 / num2
+            val actual = a.getNumber()
+            // assert
+            assertEquals(expected, actual)
+        }
+        @Test
+        fun `Div float2`() {
+            // arrange
+            val num1 = TPNumber("10", 2, 1)
+            val num2 = TPNumber("100", 2, 1)
+            val expected = TPNumber(".10", 2, 2).getNumber()
+            // act
+            val a = num1 / num2
+            val actual = a.getNumber()
+            // assert
+            assertEquals(expected, actual)
+        }
+    }
 }
