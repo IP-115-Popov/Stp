@@ -82,7 +82,7 @@ class TPNumber {
             return this + other
         }
         //a<b + "-" оба числа обязательно без -
-        if (this.number < other.number) {
+        if (this < other) {
             val rezNum = "-" + (other - this).getNumber()
             return TPNumber(rezNum, system, accuracy)
         }
@@ -156,49 +156,48 @@ class TPNumber {
         return rez2!!.setAccuracy(accuracy*2)
     }
     operator fun div(other: TPNumber): TPNumber {
-        var num1 = this
-        var num2 = other
+        val n = this.number + "0".repeat(accuracy) //добавить нули по
+        val num1 = TPNumber(n, system).setAccuracy(accuracy)
+        val num2 = other
+        //require(num2 > num1) {"num2 > num1"}
 
-        var remainder = 0
         val one = TPNumber("1",system, accuracy)
 
-        var res = TPNumber("1",system, accuracy)
 
-        var f = ""
-        if (num2 <= num1)
-        {
-            res = TPNumber("1",system, accuracy)
-        }
-        else {
-            f = "0"
-            res = TPNumber("0",system, accuracy)
-        }
-        var resAccuracy = 0
+        var res = TPNumber("0",system, accuracy)
 
+        var resAccuracy = accuracy
+
+        var buff = TPNumber("0",system, accuracy)
 
         while (true) {
-            if (num2 <= num1) {
-                num2 += num2
+            if (buff < num1) {
+                buff += num2
                 res += one
-            } else if (resAccuracy < accuracy) {
-                resAccuracy += 1
-                num1.number += "0"
-                res = one
+            } else if (num2 == num1) {
+                res += one
+                val n =  res.getNumberNotPoint()
+                return TPNumber(n, system).setAccuracy(resAccuracy + accuracy)
             } else {
-                val n =  res.getNumberNotPoint()+f
-                //return res.setAccuracy(accuracy*2)
-                return TPNumber(n, system).setAccuracy(resAccuracy*2)
+                val n =  res.getNumberNotPoint()
+                return TPNumber(n, system).setAccuracy(resAccuracy + accuracy)
             }
         }
+
+
     }
 
     operator fun compareTo(other: TPNumber): Int {
-        var rezNum = this - other
-        if (rezNum.number.first() == '-') return -1
-        else if (rezNum.number.all { char -> char == '0' || char == '.' || char == '-'})
-            return 0
-        else
-            return 1
+        val maxLength = maxOf(number.length, other.number.length)
+        val num1 = number.padStart(maxLength, '0')
+        val num2 = other.number.padStart(maxLength, '0')
+
+        for (i in 0 until maxLength)
+        {
+            if (num1[i] > num2[i]) return 1
+            else if (num1[i] < num2[i]) return -1
+        }
+        return 0
     }
 
     private fun charToDigit(char: Char): Int =
