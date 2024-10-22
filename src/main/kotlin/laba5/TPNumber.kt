@@ -55,9 +55,10 @@ class TPNumber {
         var result = ""
 
         if ((number.first() == '-') && (other.number.first() == '-')) {
-            result = "-"
             number = number.drop(1)
             other.number = other.number.drop(1)
+            val n =  "-" + (this + other).getNumber()
+            return TPNumber(n, system, accuracy)
         } else if (number.first() == '-') {
             number = number.drop(1)
             return other - this
@@ -137,13 +138,13 @@ class TPNumber {
             number = number.drop(1)
             other.number = other.number.drop(1)
         } else if (number.first() == '-') {
-            result = "-"
             number = number.drop(1)
-            return other - this
+            val n =  "-" + (this * other).getNumber()
+            return TPNumber(n, system, accuracy*2)
         } else if (other.number.first() == '-') {
-            result = "-"
             other.number = other.number.drop(1)
-            return this - other
+            val n =  "-" + (this * other).getNumber()
+            return TPNumber(n, system, accuracy*2)
         }
 
         val num1 = number//.padStart(maxLength, '0')
