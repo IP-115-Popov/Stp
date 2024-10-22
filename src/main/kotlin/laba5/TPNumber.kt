@@ -260,7 +260,11 @@ class TPNumber {
             else -> throw Exception("не подходяшее число")
         }
 
-    public fun pow2() : TPNumber = this * this
+    fun pow2() : TPNumber {
+        if (this.number.first() == '-')
+            this.number = this.number.drop(1)
+        return this * this
+    }
 
     private fun length() : Int
     {
