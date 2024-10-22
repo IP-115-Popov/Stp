@@ -224,6 +224,8 @@ class TPNumber {
             else -> throw Exception("не подходяшее число")
         }
 
+    public fun pow2() : TPNumber = this * this
+
     private fun length() : Int
     {
         if (number.first() == '-')

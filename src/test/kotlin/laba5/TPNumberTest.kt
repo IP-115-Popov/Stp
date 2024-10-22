@@ -195,5 +195,43 @@ class TPNumberTest {
             // assert
             assertEquals(expected, actual)
         }
+        @Test
+        fun `Div float3`() {
+            // arrange
+            val num1 = TPNumber("120", 3, 1)
+            val num2 = TPNumber("12", 3, 1)
+            val expected = TPNumber("10", 3, 2).getNumber()
+            // act
+            val a = num1 / num2
+            val actual = a.getNumber()
+            // assert
+            assertEquals(expected, actual)
+        }
+    }
+
+    @Nested
+    inner class Pow2Tests {
+        @Test
+        fun `Times integers`() {
+            // arrange
+            val num1 = TPNumber("10", 2, 0)
+            val expected = TPNumber("100", 2, 0).getNumber()
+            // act
+            val a = num1.pow2()
+            val actual = a.getNumber()
+            // assert
+            assertEquals(expected, actual)
+        }
+        @Test
+        fun `Times integers10`() {
+            // arrange
+            val num1 = TPNumber("5", 10, 0)
+            val expected = TPNumber("25", 10, 0).getNumber()
+            // act
+            val a = num1.pow2()
+            val actual = a.getNumber()
+            // assert
+            assertEquals(expected, actual)
+        }
     }
 }
