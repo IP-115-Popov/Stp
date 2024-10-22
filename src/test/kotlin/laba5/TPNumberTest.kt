@@ -493,5 +493,16 @@ class TPNumberTest {
             // assert
             assertEquals(expected, actual)
         }
+        @Test
+        fun `Times integers10 -5`() {
+            // arrange
+            val num1 = TPNumber("-5", 10, 0)
+            val expected = TPNumber("25", 10, 0).getNumber()
+            // act
+            val a = num1.pow2()
+            val actual = a.getNumber()
+            // assert
+            assertEquals(expected, actual)
+        }
     }
 }
