@@ -431,6 +431,42 @@ class TPNumberTest {
             // assert
             assertEquals(expected, actual)
         }
+        @Test
+        fun `Div float3 -15 div -5`() {
+            // arrange
+            val num1 = TPNumber("-120", 3, 1)
+            val num2 = TPNumber("-12", 3, 1)
+            val expected = TPNumber("10", 3, 2).getNumber()
+            // act
+            val a = num1 / num2
+            val actual = a.getNumber()
+            // assert
+            assertEquals(expected, actual)
+        }
+        @Test
+        fun `Div float3 -15 div 5`() {
+            // arrange
+            val num1 = TPNumber("-120", 3, 1)
+            val num2 = TPNumber("12", 3, 1)
+            val expected = TPNumber("-10", 3, 1).getNumber()
+            // act
+            val a = num1 / num2
+            val actual = a.getNumber()
+            // assert
+            assertEquals(expected, actual)
+        }
+        @Test
+        fun `Div float3 15 div -5`() {
+            // arrange
+            val num1 = TPNumber("120", 3, 1)
+            val num2 = TPNumber("-12", 3, 1)
+            val expected = TPNumber("-10", 3, 1).getNumber()
+            // act
+            val a = num1 / num2
+            val actual = a.getNumber()
+            // assert
+            assertEquals(expected, actual)
+        }
     }
 
     @Nested

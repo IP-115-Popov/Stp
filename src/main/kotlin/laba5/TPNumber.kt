@@ -177,6 +177,21 @@ class TPNumber {
         return rez2!!.setAccuracy(accuracy*2)
     }
     operator fun div(other: TPNumber): TPNumber {
+
+        if ((number.first() == '-') && (other.number.first() == '-')) {
+            number = number.drop(1)
+            other.number = other.number.drop(1)
+        } else if (number.first() == '-') {
+            number = number.drop(1)
+            val n =  "-" + (this / other).getNumber()
+            return TPNumber(n, system, accuracy)
+        } else if (other.number.first() == '-') {
+            other.number = other.number.drop(1)
+            val n =  "-" + (this / other).getNumber()
+            return TPNumber(n, system, accuracy)
+        }
+
+
         val n = this.number + "0".repeat(accuracy) //добавить нули по
         val num1 = TPNumber(n, system).setAccuracy(accuracy)
         val num2 = other
