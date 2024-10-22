@@ -21,12 +21,18 @@ class TPNumber {
 
     fun getNumberNotPoint() = number
     fun getNumber() : String {
+        var f = ""
+        if (number.first() == '-')
+        {
+            f = "-"
+            number = number.drop(1)
+        }
         val length = this.length()
         if (accuracy <= 0) return number // Некорректная позиция, возвращаем исходную строку
         if (accuracy > length ) {
             return number // Некорректная позиция, возвращаем исходную строку
         }
-        return number.substring(0, length - accuracy) + "." + number.substring(length - accuracy)
+        return f + number.substring(0, length - accuracy) + "." + number.substring(length - accuracy)
     }
 
 
