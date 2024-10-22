@@ -4,6 +4,21 @@ class TPNumber {
     private var number: String
     var system: Int
     var accuracy: Int
+
+    fun GetSystem() : Int = system
+    fun GetSystemString() : String = system.toString()
+    fun SetSystem(value :Int) {system = value}
+    fun SetSystemString(value :String) {system = charToDigit(value[0])}
+
+
+    fun GetAccuracy() : Int = accuracy
+    fun GetAccuracyString() : String = accuracy.toString()
+    fun setAccuracy(accuracy: Int) : TPNumber {
+        this.accuracy = accuracy
+        return this
+    }
+    fun SetAccuracyString(value :String) {accuracy = charToDigit(value[0])}
+
     fun getNumberNotPoint() = number
     fun getNumber() : String {
         val length = this.length()
@@ -13,10 +28,9 @@ class TPNumber {
         }
         return number.substring(0, length - accuracy) + "." + number.substring(length - accuracy)
     }
-    fun setAccuracy(accuracy: Int) : TPNumber {
-        this.accuracy = accuracy
-        return this
-    }
+
+
+
     constructor(number: String = "0", system: Int = 10, accuracy: Int = 0) {
         require(system in 2..16) { "неподходящаяя система счисления" }
         val arr = number.split('.')

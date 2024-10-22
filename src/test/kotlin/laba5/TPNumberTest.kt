@@ -6,6 +6,121 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Nested
 
 class TPNumberTest {
+    @Nested
+    inner class GetSetTests
+    {
+        @Test
+        fun GetSystem() {
+            // arrange
+            val num1 = TPNumber("10", 2, 0)
+            val expected = 2
+            // act
+            val actual = num1.GetSystem()
+            // assert
+            assertEquals(expected, actual)
+        }
+        @Test
+        fun GetSystemString() {
+            // arrange
+            val num1 = TPNumber("10", 2, 0)
+            val expected = "2"
+            // act
+            val actual = num1.GetSystemString()
+            // assert
+            assertEquals(expected, actual)
+        }
+
+        @Test
+        fun SetSystem() {
+            // arrange
+            val num1 = TPNumber("10", 2, 0)
+            val expected = 3
+            // act
+            num1.SetSystem(3)
+            val actual = num1.system
+            // assert
+            assertEquals(expected, actual)
+        }
+        @Test
+        fun SetSystemString() {
+            // arrange
+            val num1 = TPNumber("10", 2, 0)
+            val expected = 3
+            // act
+            num1.SetSystemString("3")
+            val actual = num1.system
+            // assert
+            assertEquals(expected, actual)
+        }
+
+        @Test
+        fun GetAccuracy() {
+            // arrange
+            val num1 = TPNumber("10", 2, 0)
+            val expected = 0
+            // act
+            val actual = num1.GetAccuracy()
+
+            // assert
+            assertEquals(expected, actual)
+        }
+        @Test
+        fun GetAccuracyString() {
+            // arrange
+            val num1 = TPNumber("10", 2, 0)
+            val expected = "0"
+            // act
+            val actual = num1.GetAccuracyString()
+
+            // assert
+            assertEquals(expected, actual)
+        }
+        @Test
+        fun setAccuracy() {
+            // arrange
+            val num1 = TPNumber("10", 2, 0)
+            val expected = 2
+            // act
+            num1.setAccuracy(2)
+            val actual = num1.accuracy
+            // assert
+            assertEquals(expected, actual)
+        }
+        @Test
+        fun SetAccuracyString() {
+            // arrange
+            val num1 = TPNumber("10", 2, 0)
+            val expected = 2
+            // act
+            num1.SetAccuracyString("2")
+            val actual = num1.accuracy
+            // assert
+            assertEquals(expected, actual)
+        }
+
+        @Test
+        fun getNumberNotPoint() {
+            // arrange
+            val num1 = TPNumber("10", 2, 0)
+            val expected = "10"
+            // act
+
+            val actual = num1.getNumberNotPoint()
+            // assert
+            assertEquals(expected, actual)
+        }
+        @Test
+        fun getNumber() {
+            // arrange
+            val num1 = TPNumber("1.0", 2, 1)
+            val expected = "1.0"
+            // act
+
+            val actual = num1.getNumber()
+            // assert
+            assertEquals(expected, actual)
+        }
+    }
 
     @Nested
     inner class ConstructorTests {
