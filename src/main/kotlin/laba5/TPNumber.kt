@@ -10,7 +10,6 @@ class TPNumber {
     fun SetSystem(value :Int) {system = value}
     fun SetSystemString(value :String) {system = charToDigit(value[0])}
 
-
     fun GetAccuracy() : Int = accuracy
     fun GetAccuracyString() : String = accuracy.toString()
     fun setAccuracy(accuracy: Int) : TPNumber {
