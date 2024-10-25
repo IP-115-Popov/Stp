@@ -233,6 +233,21 @@ class MatrixTest {
                 matrix1.equalTo(matrix2)
             }
         }
+        @Test
+        fun `equalTo - throw 2`() {
+            val matrix1 = Matrix(arrayOf(
+                arrayOf(1, 2, 3),
+                arrayOf(4, 5, 6)
+            ))
+            val matrix2 = Matrix(arrayOf(
+                arrayOf(1, 2),
+                arrayOf(4, 5)
+            ))
+
+            assertThrows<IllegalArgumentException> {
+                matrix1.equalTo(matrix2)
+            }
+        }
     }
     @Nested
     inner class TranspTest {
@@ -274,10 +289,10 @@ class MatrixTest {
             val matrix = Matrix(arrayOf(
                 arrayOf(1, 2, 3),
                 arrayOf(4, 5, 6),
-                arrayOf(7, 8, 9)
+                arrayOf(7, 8, 0)
             ))
 
-            val expected = 1
+            val expected = 0
 
             val result = matrix.min()
 
@@ -292,7 +307,7 @@ class MatrixTest {
                 arrayOf(1, 2, 3),
                 arrayOf(4, 5, 6)
             ))
-            val expected = "123\n456\n"
+            val expected = "1 2 3 \n4 5 6 \n"
             val result = matrix.ToString()
             assertEquals(expected, result)
         }
@@ -307,6 +322,16 @@ class MatrixTest {
             ))
             val expected = 1
             val result = matrix.GetOrNull(0,0)
+            assertEquals(expected, result)
+        }
+        @Test
+        fun getOrNull1() {
+            val matrix = Matrix(arrayOf(
+                arrayOf(1, 2, 3),
+                arrayOf(4, 5, 6)
+            ))
+            val expected = null
+            val result = matrix.GetOrNull(-1,0)
             assertEquals(expected, result)
         }
         @Test

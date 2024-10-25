@@ -28,10 +28,6 @@ class TPNumber {
             number = number.drop(1)
         }
         val length = this.length()
-        if (accuracy <= 0) return number // Некорректная позиция, возвращаем исходную строку
-        if (accuracy > length ) {
-            return number // Некорректная позиция, возвращаем исходную строку
-        }
         return f + number.substring(0, length - accuracy) + "." + number.substring(length - accuracy)
     }
 
@@ -52,6 +48,8 @@ class TPNumber {
     }
 
     operator fun plus(other: TPNumber): TPNumber {
+        require(this.accuracy == other.accuracy) {"this.accuracy != other.accuracy"}
+        require(this.system == other.system) {"this.system != other.system"}
         var result = ""
 
         if ((number.first() == '-') && (other.number.first() == '-')) {
@@ -88,6 +86,8 @@ class TPNumber {
     }
 
     operator fun minus(other: TPNumber) : TPNumber {
+        require(this.accuracy == other.accuracy) {"this.accuracy != other.accuracy"}
+        require(this.system == other.system) {"this.system != other.system"}
         var result = ""
         //-
         if ((number.first() == '-') && (other.number.first() == '-')) {
@@ -126,12 +126,17 @@ class TPNumber {
             val sum = digit1 - digit2
             result = digitToChar(sum) + result
         }
+        if (result[0] == '0' && result.length != 1) {
+            result = result.substring(1);
+        }
         if (carry > 0) {
             result = digitToChar(carry) + result
         }
         return TPNumber(result, system).setAccuracy(accuracy)
     }
     operator fun times(other: TPNumber) : TPNumber {
+        require(this.accuracy == other.accuracy) {"this.accuracy != other.accuracy"}
+        require(this.system == other.system) {"this.system != other.system"}
         var result = ""
 
         if ((number.first() == '-') && (other.number.first() == '-')) {
@@ -177,6 +182,8 @@ class TPNumber {
         return rez2!!.setAccuracy(accuracy*2)
     }
     operator fun div(other: TPNumber): TPNumber {
+        require(this.accuracy == other.accuracy) {"this.accuracy != other.accuracy"}
+        require(this.system == other.system) {"this.system != other.system"}
 
         if ((number.first() == '-') && (other.number.first() == '-')) {
             number = number.drop(1)
@@ -224,6 +231,8 @@ class TPNumber {
     }
 
     operator fun compareTo(other: TPNumber): Int {
+        require(this.accuracy == other.accuracy) {"this.accuracy != other.accuracy"}
+        require(this.system == other.system) {"this.system != other.system"}
         val maxLength = maxOf(number.length, other.number.length)
         val num1 = number.padStart(maxLength, '0')
         val num2 = other.number.padStart(maxLength, '0')

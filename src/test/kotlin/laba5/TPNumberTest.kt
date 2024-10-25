@@ -147,6 +147,18 @@ class TPNumberTest {
             val result = num1.getNumber()
             assertEquals(result, "11.110")
         }
+        @Test
+        fun ` getNumber 11_112`() {
+            val num1 = TPNumber("-11.11", 2, 3)
+            val result = num1.getNumber()
+            assertEquals(result, "-11.110")
+        }
+        @Test
+        fun ` getNumber 11_113`() {
+            val num1 = TPNumber("1", 2, 2)
+            val result = num1.getNumber()
+            assertEquals(result, "1.00")
+        }
     }
 
     @Nested
@@ -192,7 +204,7 @@ class TPNumberTest {
             // arrange
             val num1 = TPNumber("102", 3, 3)
             val num2 = TPNumber("-12", 3, 3)
-            val expected = TPNumber("020.000", 3, 3).getNumber()
+            val expected = TPNumber("20.000", 3, 3).getNumber()
             // act
             val a = num1 + num2
             val actual = a.getNumber()
@@ -204,7 +216,7 @@ class TPNumberTest {
             // arrange
             val num1 = TPNumber("-12", 3, 3)
             val num2 = TPNumber("102", 3, 3)
-            val expected = TPNumber("020.000", 3, 3).getNumber()
+            val expected = TPNumber("20.000", 3, 3).getNumber()
             // act
             val a = num1 + num2
             val actual = a.getNumber()
@@ -223,6 +235,26 @@ class TPNumberTest {
             // assert
             assertEquals(expected, actual)
         }
+        @Test
+        fun ` trow1`() {
+            // arrange
+            val num1 = TPNumber("-12", 2, 3)
+            val num2 = TPNumber("-102", 3, 3)
+            // assert
+            org.junit.jupiter.api.assertThrows<IllegalArgumentException> {
+                val a = num1 + num2
+            }
+        }
+        @Test
+        fun ` trow2`() {
+            // arrange
+            val num1 = TPNumber("-12", 2, 4)
+            val num2 = TPNumber("-102", 2, 3)
+            // assert
+            org.junit.jupiter.api.assertThrows<IllegalArgumentException> {
+                val a = num1 + num2
+            }
+        }
 
     }
 
@@ -233,7 +265,7 @@ class TPNumberTest {
             // arrange
             val num1 = TPNumber("101", 2, 0)
             val num2 = TPNumber("11", 2, 0)
-            val expected = TPNumber("010", 2, 0).getNumber()
+            val expected = TPNumber("10", 2, 0).getNumber()
             // act
             val a = num1 - num2
             val actual = a.getNumber()
@@ -259,7 +291,7 @@ class TPNumberTest {
             // arrange
             val num1 = TPNumber("102", 3, 1)
             val num2 = TPNumber("12", 3, 1)
-            val expected = TPNumber("020.0", 3, 1).getNumber()
+            val expected = TPNumber("20.0", 3, 1).getNumber()
             // act
             val a = num1 - num2
             val actual = a.getNumber()
@@ -295,12 +327,32 @@ class TPNumberTest {
             // arrange
             val num1 = TPNumber("-12", 3, 3)
             val num2 = TPNumber("-12", 3, 3)
-            val expected = TPNumber("00.000", 3, 3).getNumber()
+            val expected = TPNumber("0.000", 3, 3).getNumber()
             // act
             val a = num1 - num2
             val actual = a.getNumber()
             // assert
             assertEquals(expected, actual)
+        }
+        @Test
+        fun ` trow1`() {
+            // arrange
+            val num1 = TPNumber("-12", 2, 4)
+            val num2 = TPNumber("-102", 2, 3)
+            // assert
+            org.junit.jupiter.api.assertThrows<IllegalArgumentException> {
+                val a = num1 - num2
+            }
+        }
+        @Test
+        fun ` trow2`() {
+            // arrange
+            val num1 = TPNumber("-12", 3, 3)
+            val num2 = TPNumber("-102", 2, 3)
+            // assert
+            org.junit.jupiter.api.assertThrows<IllegalArgumentException> {
+                val a = num1 - num2
+            }
         }
     }
 
@@ -377,6 +429,26 @@ class TPNumberTest {
             val actual = a.getNumber()
             // assert
             assertEquals(expected, actual)
+        }
+        @Test
+        fun ` trow1`() {
+            // arrange
+            val num1 = TPNumber("-12", 3, 3)
+            val num2 = TPNumber("-102", 2, 3)
+            // assert
+            org.junit.jupiter.api.assertThrows<IllegalArgumentException> {
+                val a = num1 * num2
+            }
+        }
+        @Test
+        fun ` trow2`() {
+            // arrange
+            val num1 = TPNumber("-12", 2, 2)
+            val num2 = TPNumber("-102", 2, 3)
+            // assert
+            org.junit.jupiter.api.assertThrows<IllegalArgumentException> {
+                val a = num1 * num2
+            }
         }
     }
 
@@ -467,6 +539,26 @@ class TPNumberTest {
             // assert
             assertEquals(expected, actual)
         }
+        @Test
+        fun ` trow1`() {
+            // arrange
+            val num1 = TPNumber("-12", 2, 2)
+            val num2 = TPNumber("-102", 2, 3)
+            // assert
+            org.junit.jupiter.api.assertThrows<IllegalArgumentException> {
+                val a = num1 / num2
+            }
+        }
+        @Test
+        fun ` trow2`() {
+            // arrange
+            val num1 = TPNumber("-12", 3, 3)
+            val num2 = TPNumber("-102", 2, 3)
+            // assert
+            org.junit.jupiter.api.assertThrows<IllegalArgumentException> {
+                val a = num1 / num2
+            }
+        }
     }
 
     @Nested
@@ -503,6 +595,65 @@ class TPNumberTest {
             val actual = a.getNumber()
             // assert
             assertEquals(expected, actual)
+        }
+    }
+    @Nested
+    inner class compereToTests {
+        @Test
+        fun ` trow1`() {
+            // arrange
+            val num1 = TPNumber("-12", 2, 2)
+            val num2 = TPNumber("-102", 2, 3)
+            // assert
+            org.junit.jupiter.api.assertThrows<IllegalArgumentException> {
+                val a = num1 > num2
+            }
+        }
+        @Test
+        fun ` trow2`() {
+            // arrange
+            val num1 = TPNumber("-12", 3, 3)
+            val num2 = TPNumber("-102", 2, 3)
+            // assert
+            org.junit.jupiter.api.assertThrows<IllegalArgumentException> {
+                val a = num1 > num2
+            }
+        }
+        @Test
+        fun ` 1`() {
+            // arrange
+            val num1 = TPNumber("101", 2, 0)
+            val num2 = TPNumber("101", 2, 0)
+            val expected = 0
+            // act
+            val a = num1.compareTo(num2)
+            // assert
+            assertEquals(a, expected)
+
+        }
+        @Test
+        fun ` 2`() {
+            // arrange
+            val num1 = TPNumber("101", 2, 0)
+            val num2 = TPNumber("102", 2, 0)
+            val expected = -1
+            // act
+            val a = num1.compareTo(num2)
+            // assert
+            assertEquals(a, expected)
+
+        }
+        @Test
+        fun ` 3`() {
+            // arrange
+            val num1 = TPNumber("102", 2, 0)
+            val num2 = TPNumber("101", 2, 0)
+            val expected = 1
+            // act
+            val a = num1.compareTo(num2)
+            // assert
+            assertEquals(a, expected)
+
         }
     }
 }

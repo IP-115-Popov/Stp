@@ -85,13 +85,14 @@ class Matrix  {
         var rez = ""
         for (i in 0 until  matrix.size) {
             for (j in 0 until  matrix[0].size) {
-                rez += matrix[i][j].toString()
+                rez += matrix[i][j].toString() + " "
             }
             rez += "\n"
         }
         return rez
     }
     fun GetOrNull(line: Int, i : Int) : Int? {
+        if (line < 0 || i < 0) return null
         if(line > matrix.size || i > matrix[0].size)
             return null
         else
