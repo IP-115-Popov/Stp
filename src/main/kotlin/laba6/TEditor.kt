@@ -1,7 +1,5 @@
 package laba6
 
-import kotlin.contracts.contract
-
 class TEditor {
     var a : Double = 0.0
     var b : Double = 0.0
@@ -17,19 +15,49 @@ class TEditor {
         b *= -1
         return getNumder()
     }
-    fun addDigit(digit : Int, mode : Mode) : String {
+    fun addDigit(digit : Int, mode : Mode, part : Part, position: Position) : String {
+        fun editPart(digit : Int, part : String, position: Position) : String
+        {
+            var rez = part
+            when (position) {
+                Position.Start -> {
+                    rez = digit.toString() + part
+                }
+                Position.End -> {
+                    rez = part +  digit.toString()
+                }
+            }
+            return rez
+        }
+        fun editMode(digit : Int, i : Double, part : Part, position: Position) : Double {
+            val arr = i.toString().split('.')
+            var integer = arr.get(0)
+            var imaginary = arr.get(1)
+            when (part) {
+                Part.integer ->
+                {
+                    integer = editPart(digit,integer, position)
+                }
+                Part.imaginary ->{
+                    imaginary = editPart(digit,imaginary, position)
+                }
+            }
+            var rez = (integer + "." + imaginary).toDoubleOrNull() ?: 0.0
+            return rez
+        }
+
         when (mode) {
-            Mode.real -> a*10 + digit
-            Mode.imaginary -> b*10 + digit
+            Mode.real -> a = editMode(digit, a, part, position)
+            Mode.imaginary -> b = editMode(digit, b, part, position)
         }
         return getNumder()
     }
-    fun addZero(mode : Mode) = addDigit(0, mode)
-    fun deleteDigitRight(mode : Mode) : String {
-        when (mode) {
-            Mode.real -> Math.floor(a/10)
-            Mode.imaginary -> Math.floor(b/10)
-        }
+    fun addZero(mode : Mode, part : Part, position: Position) = addDigit(0, mode, part, position)
+    fun deleteDigitRight(mode : Mode, part : Part, position: Position) : String {
+//        when (mode) {
+//            Mode.real -> Math.floor(a/10)
+//            Mode.imaginary -> Math.floor(b/10)
+//        }
         return getNumder()
     }
     fun clear() : String {
@@ -40,14 +68,17 @@ class TEditor {
     fun edit(i : Int) : String {
         when (i) {
             0 -> addMinus()
-            1 -> addDigit(1, Mode.real)
-            2 -> addDigit(1, Mode.imaginary)
+            1 -> addDigit(1, Mode.real, Part.integer , Position.Start)
             else -> clear()
         }
         return getNumder()
     }
     fun getNumder() : String {
-        return a.toString() + b.toString() + "i"
+        if (b < 0)
+            return a.toString() + b.toString() + "i"
+        else {
+            return a.toString() + "+" + b.toString() + "i"
+        }
     }
     fun setString(number : String) {
         var aa =  if (number.startsWith('-')) -1.0 else 1.0
@@ -70,5 +101,9 @@ class TEditor {
     enum class Part() {
         integer,
         imaginary
+    }
+    enum class Position() {
+        Start,
+        End
     }
 }
