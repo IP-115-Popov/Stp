@@ -53,11 +53,29 @@ class TEditor {
         return getNumder()
     }
     fun addZero(mode : Mode, part : Part, position: Position) = addDigit(0, mode, part, position)
-    fun deleteDigitRight(mode : Mode, part : Part, position: Position) : String {
-//        when (mode) {
-//            Mode.real -> Math.floor(a/10)
-//            Mode.imaginary -> Math.floor(b/10)
-//        }
+    fun deleteDigitRight(mode : Mode, part : Part) : String {
+        fun editMode(i : Double, part : Part) : Double {
+            val arr = i.toString().split('.')
+            var integer = arr.get(0)
+            var imaginary = arr.get(1)
+            when (part) {
+                Part.integer ->
+                {
+                    integer = integer.dropLast(1)
+                }
+                Part.imaginary ->{
+                    imaginary = imaginary.dropLast(1)
+                }
+            }
+            var rez = (integer + "." + imaginary).toDoubleOrNull() ?: 0.0
+            return rez
+        }
+
+        when (mode) {
+            Mode.real -> a = editMode(a, part)
+            Mode.imaginary -> b = editMode(b, part)
+        }
+
         return getNumder()
     }
     fun clear() : String {
