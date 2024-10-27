@@ -266,22 +266,172 @@ class TEditorTest
     }
     @Nested
     inner class deleteDigitRightTests{
-
+        @Test
+        fun deleteDigitRight() {
+            // arrange
+            val expected = "0.0+1.0i"
+            // act
+            val tEditor =  TEditor("1+1i")
+            val actual = tEditor.deleteDigitRight(TEditor.Mode.real, TEditor.Part.integer)
+            // assert
+            assertEquals(expected, actual)
+        }
+        @Test
+        fun deleteDigitRight2() {
+            // arrange
+            val expected = "1.0+1.0i"
+            // act
+            val tEditor =  TEditor("11+1i")
+            val actual = tEditor.deleteDigitRight(TEditor.Mode.real, TEditor.Part.integer)
+            // assert
+            assertEquals(expected, actual)
+        }
+        @Test
+        fun deleteDigitRight3() {
+            // arrange
+            val expected = "1.0+1.0i"
+            // act
+            val tEditor =  TEditor("1+11i")
+            val actual = tEditor.deleteDigitRight(TEditor.Mode.imaginary, TEditor.Part.integer)
+            // assert
+            assertEquals(expected, actual)
+        }
+        @Test
+        fun deleteDigitRight4() {
+            // arrange
+            val expected = "1.1+1.0i"
+            // act
+            val tEditor =  TEditor("1.11+1i")
+            val actual = tEditor.deleteDigitRight(TEditor.Mode.real, TEditor.Part.imaginary)
+            // assert
+            assertEquals(expected, actual)
+        }
+        @Test
+        fun deleteDigitRight5() {
+            // arrange
+            val expected = "1.0+1.1i"
+            // act
+            val tEditor =  TEditor("1+1.11i")
+            val actual = tEditor.deleteDigitRight(TEditor.Mode.imaginary, TEditor.Part.imaginary)
+            // assert
+            assertEquals(expected, actual)
+        }
     }
     @Nested
     inner class clearTests{
+        @Test
+        fun clear() {
+            // arrange
+            val expected = "0.0+0.0i"
+            // act
+            val tEditor =  TEditor("1+1i")
+            val actual = tEditor.clear()
+            // assert
+            assertEquals(expected, actual)
+        }
 
     }
     @Nested
     inner class editTests{
-
+        @Test
+        fun `edit 0`() {
+            // arrange
+            val expected = "-1.1-1.1i"
+            // act
+            val tEditor =  TEditor("1.1+1.1i")
+            val actual = tEditor.edit(0)
+            // assert
+            assertEquals(expected, actual)
+        }
+        @Test
+        fun `edit 1`() {
+            // arrange
+            val expected = "11.1+1.1i"
+            // act
+            val tEditor =  TEditor("1.1+1.1i")
+            val actual = tEditor.edit(1)
+            // assert
+            assertEquals(expected, actual)
+        }
+        @Test
+        fun `edit default`() {
+            // arrange
+            val expected = "0.0+0.0i"
+            // act
+            val tEditor =  TEditor("1.1+1.1i")
+            val actual = tEditor.edit(-1)
+            // assert
+            assertEquals(expected, actual)
+        }
     }
     @Nested
     inner class getNumderTests{
-
+        @Test
+        fun getNumder() {
+            // arrange
+            val expected = "1.0+1.0i"
+            // act
+            val tEditor =  TEditor("1+1i")
+            val actual = tEditor.getNumder()
+            // assert
+            assertEquals(expected, actual)
+        }
+        @Test
+        fun getNumder2() {
+            // arrange
+            val expected = "1.0-1.0i"
+            // act
+            val tEditor =  TEditor("1-1i")
+            val actual = tEditor.getNumder()
+            // assert
+            assertEquals(expected, actual)
+        }
     }
     @Nested
     inner class setStringTests{
-
+        @Test
+        fun `setString 1_1+1_1i`() {
+            // arrange
+            val expected = "1.1 1.1"
+            // act
+            val tEditor =  TEditor("0.1+0.1i")
+            tEditor.setString("1.1+1.1i")
+            val actual = tEditor.a.toString() + " " + tEditor.b.toString()
+            // assert
+            assertEquals(expected, actual)
+        }
+        @Test
+        fun `setString 1_1-1_1i`() {
+            // arrange
+            val expected = "1.1 -1.1"
+            // act
+            val tEditor =  TEditor("0.1-0.1i")
+            tEditor.setString("1.1-1.1i")
+            val actual = tEditor.a.toString() + " " + tEditor.b.toString()
+            // assert
+            assertEquals(expected, actual)
+        }
+        @Test
+        fun `setString -1_1+1_1i`() {
+            // arrange
+            val expected = "-1.1 1.1"
+            // act
+            val tEditor =  TEditor("-0.1+0.1i")
+            tEditor.setString("-1.1+1.1i")
+            val actual = tEditor.a.toString() + " " + tEditor.b.toString()
+            // assert
+            assertEquals(expected, actual)
+        }
+        @Test
+        fun `setString -1_1-1_1i`() {
+            // arrange
+            val expected = "-1.1 -1.1"
+            // act
+            val tEditor =  TEditor("-0.1-0.1i")
+            tEditor.setString("-1.1-1.1i")
+            val actual = tEditor.a.toString() + " " + tEditor.b.toString()
+            // assert
+            assertEquals(expected, actual)
+        }
     }
 }
