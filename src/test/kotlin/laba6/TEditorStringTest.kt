@@ -8,6 +8,16 @@ class TEditorStringTest {
     @Nested
     inner class ConstructorTests {
         @Test
+        fun `Constructor 0+0i`() {
+            // arrange
+            val expected = "0+0i"
+            // act
+            val tEditorString =  TEditorString("0+0i")
+            val actual = tEditorString.getNumder()
+            // assert
+            assertEquals(expected, actual)
+        }
+        @Test
         fun `Constructor 1_1+1_1i`() {
             // arrange
             val expected = "1.1+1.1i"
