@@ -123,7 +123,7 @@ class TSetTest {
     @Nested
     inner class MultiplyTests {
         @Test
-        fun `Multiply combines two sets without duplicates`() {
+        fun `4' combines two sets without duplicates`() {
             val set1 = TSet<Int>()
             set1.Add(1)
             set1.Add(2)
@@ -131,10 +131,10 @@ class TSetTest {
             set2.Add(2)
             set2.Add(3)
             val multipliedSet = set1.Multiply(set2)
-            assertEquals(3, multipliedSet.size())
-            assertTrue(multipliedSet.Belongs(1))
+            assertEquals(1, multipliedSet.size())
+            assertTrue(!multipliedSet.Belongs(1))
             assertTrue(multipliedSet.Belongs(2))
-            assertTrue(multipliedSet.Belongs(3))
+            assertTrue(!multipliedSet.Belongs(3))
         }
     }
 

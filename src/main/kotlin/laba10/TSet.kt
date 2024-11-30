@@ -32,7 +32,7 @@ class TSet <T>{
 
     fun Subtract(v: TSet<T>): TSet<T> = TSet(value - v.value)
 
-    fun Multiply(v: TSet<T>): TSet<T> = TSet(value .union(v.value))
+    fun Multiply(v: TSet<T>): TSet<T> = TSet(value .intersect(v.value))
 
     fun size() : Int = value.size
 

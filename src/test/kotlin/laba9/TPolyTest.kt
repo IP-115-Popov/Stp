@@ -117,22 +117,39 @@ class TPolyTest {
             assertEquals(listOf(TMember(6.0, 3)), product.poly)
         }
         @Test
+        fun `2`() {
+            val poly1 = TPoly(2.0,1)
+            poly1.poly.add(TMember(1.0,1))
+            val poly2 = TPoly(3.0,1)
+            poly2.poly.add(TMember(1.0,1))
+            val product = poly1 * poly2
+            assertEquals(TMember(12.0, 2), product.poly.first())
+        }
+        @Test
+        fun `3`() {
+            val poly1 = TPoly(2.0,2)
+            poly1.poly.add(TMember(1.0,2))
+            val poly2 = TPoly(3.0,2)
+            poly2.poly.add(TMember(1.0,2))
+            val product = poly1 * poly2
+            assertEquals(TMember(12.0, 4), product.poly.first())
+        }
+        @Test
+        fun `4`() {
+            val poly1 = TPoly(2.0,2)
+            poly1.poly.add(TMember(1.0,1))
+            val poly2 = TPoly(3.0,2)
+            poly2.poly.add(TMember(1.0,1))
+            val product = poly1 * poly2
+            assertEquals(TMember(12.0, 4), product.poly.first())
+        }
+        @Test
         fun `times operator handles complex polynomials`(){
             val poly1 = TPoly(2.0,2)
             poly1.poly.add(TMember(1.0,1))
             val poly2 = TPoly(3.0,1)
             poly2.poly.add(TMember(1.0,0))
             val product = poly1 * poly2
-
-
-
-
-
-
-
-
-
-
             assertEquals(listOf(TMember(6.0,3),TMember(2.0,2),TMember(3.0,2), TMember(1.0,1)).toSet(), product.poly.toSet())
         }
 

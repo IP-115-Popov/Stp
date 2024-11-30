@@ -50,7 +50,7 @@ class TPoly {
 
     operator fun times(other: TPoly) : TPoly {
 
-        val result = mutableListOf<TMember>()
+        var result = mutableListOf<TMember>()
 
         for (i in poly) {
             for (j in other.poly)
@@ -59,8 +59,16 @@ class TPoly {
             }
         }
 
+        val result2 = result.groupBy { it.n }.map { it ->
+            TMember(
+                it.value.fold(0.0){acc: Double, tMember: TMember ->  acc + tMember.c},
+                it.key
+            )
+            //it.key to it.value.fold(1.0){acc: Double, tMember: TMember ->  acc * tMember.c}
+        }
+
         val r = TPoly(0.0,0)
-        r.poly = result
+        r.poly = result2.toMutableList()
         return r
     }
 
